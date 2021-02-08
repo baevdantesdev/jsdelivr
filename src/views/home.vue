@@ -1,52 +1,60 @@
 <template>
-  <div class="container pt-5">
-    <b-input
-      class="mb-3"
-      placeholder="Search package"
-      @change="getData"
-      :disabled="isLoading"
-      v-model="searchText"></b-input>
-    <b-pagination
-      v-if="rows"
-      v-model="currentPage"
-      :total-rows="rows"
-      :per-page="perPage"
-      aria-controls="tableData"
-    ></b-pagination>
-    <b-table
-      id="tableData"
-      ref="tableData"
-      :per-page="perPage"
-      :current-page="currentPage"
-      hover
-      selectable
-      select-mode="single"
-      bordered
-      responsive
-      @row-selected="selectRow($event)"
-      :items="tableData"></b-table>
-    <b-modal
-      v-model="isShownModal"
-      centered
-      scrollable
-      @hide="closeModal"
-      id="modal"
-      :title="selectedPackage ? selectedPackage.package.name : null">
-      <div v-if="selectedPackage">
-        <p v-if="selectedPackage.package.description"><b>{{ selectedPackage.package.description }}</b></p>
-        <p v-if="selectedPackage.package.author"><b>Author:</b> {{ selectedPackage.package.author.name }}</p>
-        <p v-if="selectedPackage.package.version"><b>Version:</b> {{ selectedPackage.package.version }}</p>
-        <p v-if="selectedPackage.package.publisher"><b>Publisher name:</b> {{
-            selectedPackage.package.publisher.username
-          }}</p>
-        <p v-if="selectedPackage.package.publisher"><b>Publisher email:</b> {{
-            selectedPackage.package.publisher.email
-          }}</p>
+  <div class="pt-5 content">
+    <div class="container">
+      <b-input
+        class="mb-3"
+        placeholder="Search package"
+        @change="getData"
+        :disabled="isLoading"
+        v-model="searchText"></b-input>
+      <b-pagination
+        v-if="rows"
+        v-model="currentPage"
+        :total-rows="rows"
+        :per-page="perPage"
+        aria-controls="tableData"
+      ></b-pagination>
+      <b-table
+        id="tableData"
+        ref="tableData"
+        :per-page="perPage"
+        :current-page="currentPage"
+        hover
+        selectable
+        select-mode="single"
+        bordered
+        responsive
+        @row-selected="selectRow($event)"
+        :items="tableData"></b-table>
+      <b-modal
+        v-model="isShownModal"
+        centered
+        scrollable
+        @hide="closeModal"
+        id="modal"
+        :title="selectedPackage ? selectedPackage.package.name : null">
+        <div v-if="selectedPackage">
+          <p v-if="selectedPackage.package.description"><b>{{ selectedPackage.package.description }}</b></p>
+          <p v-if="selectedPackage.package.author"><b>Author:</b> {{ selectedPackage.package.author.name }}</p>
+          <p v-if="selectedPackage.package.version"><b>Version:</b> {{ selectedPackage.package.version }}</p>
+          <p v-if="selectedPackage.package.publisher"><b>Publisher name:</b> {{
+              selectedPackage.package.publisher.username
+            }}</p>
+          <p v-if="selectedPackage.package.publisher"><b>Publisher email:</b> {{
+              selectedPackage.package.publisher.email
+            }}</p>
+        </div>
+        <template #modal-footer>
+          <b-button @click="isShownModal = false">Close</b-button>
+        </template>
+      </b-modal>
+    </div>
+    <div class="footer text-light d-flex align-items-center">
+      <div class="container">
+        <p>Developer: Baev Daniil</p>
+        <p><a href="https://github.com/baevdantes93" target="_blank">https://github.com/baevdantes93</a></p>
       </div>
-      <template #modal-footer>
-        <b-button @click="isShownModal = false">Close</b-button>
-      </template>
-    </b-modal>
+    </div>
   </div>
 </template>
 
@@ -107,3 +115,17 @@ export default class Home extends Vue {
   }
 }
 </script>
+
+<style lang="scss">
+.content {
+  padding-bottom: 100px;
+}
+.footer {
+  background: #000;
+  height: 100px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+</style>
